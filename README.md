@@ -21,6 +21,9 @@ Select start date to populate the date fields, fill in start time and end time f
 - Rudimentary session handling
 - Automatic field population
 - Automatic hour calculation and conversion
+- 5-days of logging
+- Work over month borders
+- Lunch break deduction
 
 ## To-Do list
 
@@ -31,3 +34,4 @@ for functions, most likely trying to add following:
 - logout
 - security measures (if anything private is handled)
 - File name field
+- Lunch break lenght option
