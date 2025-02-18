@@ -21,14 +21,16 @@ Select start date to populate the date fields, fill in start time and end time f
 - Rudimentary session handling
 - Automatic field population
 - Automatic hour calculation and conversion
-- 5-days of logging
-- Work over month borders
+- 5-days of logging, and
+- monthly logging by the week
+- Based on weeks, works over month borders
 - Lunch break deduction
 
 ## To-Do list
 
 for functions, most likely trying to add following:
-- Whole month long logging
+- Combining weekly and monthly datas
+- weekly logging for whole month
 - Database functionality
 - login, and
 - logout
