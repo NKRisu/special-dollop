@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Work Hours - LogTool</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="navigation">
+            <a href="/monthly"><button>Go to Monthly Log</button></a>
+        </div>
+        <form id="reportForm">
+            <div class="day-container">
+                <div class="start-date-container">
+                    <h2>Weekly Work Hours - LogTool</h2>
+                    <label for="weekNumber" class="required">Week Number*:</label>
+                    <input type="number" id="weekNumber" min="1" max="53" required>
+                    <label for="year" class="required">Year*:</label>
+                    <input type="number" id="year" min="1900" max="2100" required>
+                    <button type="button" id="setWeekBtn">Set Week</button>
+                </div>
+                <h2>Monday</h2>
+                <label for="dateMonday" class="required">Date*:</label>
+                <input type="text" name="dateMonday" readonly required>
+                <label for="timeStartedMonday">Time Started:</label>
+                <input type="text" name="timeStartedMonday">
+                <label for="timeEndedMonday">Time Ended:</label>
+                <input type="text" name="timeEndedMonday">
+                <label for="lunchBreakMonday" class="required">Lunch Break:</label>
+                <input type="checkbox" id="lunchBreakMonday" name="lunchBreakMonday">
+                <label for="lunchBreakMonday"></label>
+                <label for="summaryMonday">Summary:</label>
+                <textarea name="summaryMonday"></textarea>
+                <label for="projectCodeMonday">Project Code:</label>
+                <input type="text" name="projectCodeMonday">
+            </div>
+            <div class="day-container">
+                <h2>Tuesday</h2>
+                <label for="dateTuesday" class="required">Date*:</label>
+                <input type="text" name="dateTuesday" readonly required>
+                <label for="timeStartedTuesday">Time Started:</label>
+                <input type="text" name="timeStartedTuesday">
+                <label for="timeEndedTuesday">Time Ended:</label>
+                <input type="text" name="timeEndedTuesday">
+                <label for="lunchBreakTuesday">Lunch Break:</label>
+                <input type="checkbox" id="lunchBreakTuesday" name="lunchBreakTuesday">
+                <label for="lunchBreakTuesday"></label>
+                <label for="summaryTuesday">Summary:</label>
+                <textarea name="summaryTuesday"></textarea>
+                <label for="projectCodeTuesday">Project Code:</label>
+                <input type="text" name="projectCodeTuesday">
+            </div>
+            <div class="day-container">
+                <h2>Wednesday</h2>
+                <label for="dateWednesday" class="required">Date*:</label>
+                <input type="text" name="dateWednesday" readonly required>
+                <label for="timeStartedWednesday">Time Started:</label>
+                <input type="text" name="timeStartedWednesday">
+                <label for="timeEndedWednesday">Time Ended:</label>
+                <input type="text" name="timeEndedWednesday">
+                <label for="lunchBreakWednesday">Lunch Break:</label>
+                <input type="checkbox" id="lunchBreakWednesday" name="lunchBreakWednesday">
+                <label for="lunchBreakWednesday"></label>
+                <label for="summaryWednesday">Summary:</label>
+                <textarea name="summaryWednesday"></textarea>
+                <label for="projectCodeWednesday">Project Code:</label>
+                <input type="text" name="projectCodeWednesday">
+            </div>
+            <div class="day-container">
+                <h2>Thursday</h2>
+                <label for="dateThursday" class="required">Date*:</label>
+                <input type="text" name="dateThursday" readonly required>
+                <label for="timeStartedThursday" class="required">Time Started:</label>
+                <input type="text" name="timeStartedThursday">
+                <label for="timeEndedThursday">Time Ended:</label>
+                <input type="text" name="timeEndedThursday">
+                <label for="lunchBreakThursday">Lunch Break:</label>
+                <input type="checkbox" id="lunchBreakThursday" name="lunchBreakThursday">
+                <label for="lunchBreakThursday"></label>
+                <label for="summaryThursday">Summary:</label>
+                <textarea name="summaryThursday"></textarea>
+                <label for="projectCodeThursday">Project Code:</label>
+                <input type="text" name="projectCodeThursday">
+            </div>
+            <div class="day-container">
+                <h2>Friday</h2>
+                <label for="dateFriday" class="required">Date*:</label>
+                <input type="text" name="dateFriday" readonly required>
+                <label for="timeStartedFriday">Time Started:</label>
+                <input type="text" name="timeStartedFriday">
+                <label for="timeEndedFriday">Time Ended:</label>
+                <input type="text" name="timeEndedFriday">
+                <label for="lunchBreakFriday">Lunch Break:</label>
+                <input type="checkbox" id="lunchBreakFriday" name="lunchBreakFriday">
+                <label for="lunchBreakFriday"></label>
+                <label for="summaryFriday">Summary:</label>
+                <textarea name="summaryFriday"></textarea>
+                <label for="projectCodeFriday">Project Code:</label>
+                <input type="text" name="projectCodeFriday">
+            </div>
+            <div class="notification-container">
+                <div>
+                    <h5>Fields marked with * must be filled. These will auto-fill for the days.</h5>
+                </div>
+            </div>
+            <button id="downloadBtn" type="button">Download CSV</button>
+        </form>
+    </div>
+    <script src="/static/weeklypage.js"></script>
+</body>
+</html>

@@ -23,9 +23,18 @@ async function handler(req) {
         return await serveStaticFile(filePath, contentType);
     }
 
-    // Route: Index page
+    // Route: Weekly page
     if (url.pathname === "/" && req.method === "GET") {
-        const response = await serveStaticFile('./views/index.html', 'text/html');
+        const response = await serveStaticFile('./views/weekly.html', 'text/html');
+        response.headers.set("Content-Security-Policy", "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self'; connect-src 'self'");
+        response.headers.set("X-Frame-Options", "DENY");
+        response.headers.set("X-Content-Type-Options", "nosniff");
+        return response;
+    }
+
+    // Route: Monthly page
+    if (url.pathname === "/monthly" && req.method === "GET") {
+        const response = await serveStaticFile('./views/monthly.html', 'text/html');
         response.headers.set("Content-Security-Policy", "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self'; connect-src 'self'");
         response.headers.set("X-Frame-Options", "DENY");
         response.headers.set("X-Content-Type-Options", "nosniff");

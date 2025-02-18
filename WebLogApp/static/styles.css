@@ -45,9 +45,41 @@ body {
     align-items: center;
 }
 
+.week-container {
+    background-color: #ffffff;
+    padding: 1rem;
+    margin: 0.5rem 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 1200px;
+    min-width: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.notification-container {
+    background-color: #ffffff;
+    padding: 1rem;
+    margin: 0.5rem 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 1200px;
+    min-width: auto;
+}
+
 h2 {
     flex-basis: 20%;
     margin-right: -5.5rem;
+}
+
+h5 {
+    display: contents;
+    align-items: center;
+    flex-basis: 20%;
+    padding-left: 50rem;
 }
 
 label {
@@ -63,6 +95,8 @@ input, select, textarea {
 }
 
 button {
+    width: 200px; /* Set the width of the buttons */
+    height: 30px; /* Set the height of the buttons */
     margin-top: 1rem;
     padding: 0.5rem 2rem;
     border: none;
@@ -110,4 +144,15 @@ input[type="checkbox"]:checked + label:after {
     top: 3px;
     font-size: 40px;
     color: #e20e49;
+}
+
+/* Required field indicator */
+label.required:after {
+    content: '*';
+    color: #e20e49;
+    font-size: 1.2em;
+    position: absolute;
+    right: -1.5em;
+    top: 50%;
+    transform: translateY(-50%);
 }
