@@ -25,12 +25,13 @@ Select start date to populate the date fields, fill in start time and end time f
 - monthly logging by the week
 - Based on weeks, works over month borders
 - Lunch break deduction
+- Adding weeks to weekly logging
+- Removing weeks from weekly logging
 
 ## To-Do list
 
 for functions, most likely trying to add following:
 - Combining weekly and monthly datas
-- weekly logging for whole month
 - Database functionality
 - login, and
 - logout
