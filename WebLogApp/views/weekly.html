@@ -11,6 +11,11 @@
         <div class="navigation">
             <a href="/monthly"><button>Go to Monthly Log</button></a>
         </div>
+        <div class="notification-container">
+            <div>
+                <h5>Fields marked with * must be filled. These will auto-fill for the days.</h5>
+            </div>
+        </div>
         <form id="reportForm">
             <div class="day-container">
                 <div class="start-date-container">
@@ -100,14 +105,14 @@
                 <label for="projectCodeFriday">Project Code:</label>
                 <input type="text" name="projectCodeFriday">
             </div>
-            <div class="notification-container">
-                <div>
-                    <h5>Fields marked with * must be filled. These will auto-fill for the days.</h5>
-                </div>
-            </div>
+            <button id="addWeekBtn" type="button">Add a Week</button>
+            <button id="deleteWeekBtn" type="button">Delete a Week</button>
             <button id="downloadBtn" type="button">Download CSV</button>
         </form>
     </div>
     <script src="/static/weeklypage.js"></script>
+    <div class="banner">
+        <img src="/static/images/logos-english-all.jpg" alt="logos of all the participating organisations in AIMLearning.">
+    </div>    
 </body>
 </html>

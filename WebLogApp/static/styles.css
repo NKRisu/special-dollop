@@ -6,8 +6,27 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    overflow: hidden;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
+
+.banner {
+    width: 100%;
+    background-color: #f8f9fa; /* Change this to your preferred background color */
+    text-align: center;
+    padding: 10px; /* Adjust padding as needed */
+    position: absolute;
+    left: 0;
+    bottom: -400px; /* Initially hide the banner */
+    transition: bottom 0.5s ease; /* Smooth transition */
+}
+
+
+.banner img {
+    max-width: 100%;
+    height: auto;
+}
+
 
 .container {
     background-color:#d5d7dfbb;

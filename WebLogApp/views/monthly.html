@@ -73,5 +73,22 @@
         </form>
     </div>
     <script src="/static/monthlypage.js"></script>
+    <div class="banner">
+        <img src="/static/images/logos-english-all.jpg" alt="logos of all the participating organisations in AIMLearning.">
+    </div>
+    <script>
+        document.querySelector('.container').addEventListener('scroll', function() {
+            const banner = document.querySelector('.banner');
+            const container = document.querySelector('.container');
+            const scrollPosition = container.scrollTop + container.clientHeight;
+            const containerHeight = container.scrollHeight;
+        
+            if (scrollPosition >= containerHeight) {
+                banner.style.bottom = '0';
+            } else {
+                banner.style.bottom = '-60px'; // Adjust based on the height of the banner
+            }
+        });
+        </script>
 </body>
 </html>
