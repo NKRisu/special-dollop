@@ -4,12 +4,17 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById("addWeekBtn").addEventListener('click', addWeekToForm);
     document.getElementById("deleteWeekBtn").addEventListener('click', deleteWeekFromForm)
 
+
+    // Pre-load the first dynamic week
+    addWeekToForm();
+
     // Save form data to local storage on input change
     const form = document.getElementById('reportForm');
     form.addEventListener('input', saveFormData);
     // inition for week counting
     updateWeekCounter();
 });
+
 // Rudimentary "session" handling
 function saveFormData() {
     const form = document.getElementById('reportForm');
@@ -20,6 +25,7 @@ function saveFormData() {
     });
     localStorage.setItem('formData', JSON.stringify(data));
 }
+
 // Loads the saved formdata
 function loadFormData() {
     const formData = JSON.parse(localStorage.getItem('formData') || '{}');
@@ -36,11 +42,12 @@ function loadFormData() {
         }
     }
 }
+
 // Deleting added weeks
 function deleteWeekFromForm() {
     const weekContainers = document.querySelectorAll('.day-container');
 
-    if (weekContainers.length > 5) {
+    if (weekCount > 2) {
         // Get the last 5 containers representing one week
         const lastWeekContainers = Array.from(weekContainers).slice(-5);
 
@@ -63,7 +70,6 @@ function deleteWeekFromForm() {
     }
 }
 
-let weekCount = 1; // Initial week is already present
 
 // More robust way for week counting
 function updateWeekCounter() {
@@ -71,104 +77,102 @@ function updateWeekCounter() {
     weekCount = Math.ceil(weekContainers.length / 5); // Calculate the number of weeks
 }
 
-// Adding weeks with HTML form, very clunky. Should edit this later.
+// Initial week is there
+let weekCount = 1;
+
 function addWeekToForm() {
     if (weekCount < 4) {
+        weekCount++; // Increment here for the week count with unique ID
         const weekTemplate = `
             <div class="day-container">
                 <h2>Monday</h2>
-                <label for="dateMonday" class="required">Date*:</label>
-                <input type="text" name="dateMonday" readonly required>
-                <label for="timeStartedMonday">Time Started:</label>
-                <input type="text" name="timeStartedMonday">
-                <label for="timeEndedMonday">Time Ended:</label>
-                <input type="text" name="timeEndedMonday">
-                <label for="lunchBreakMonday" class="required">Lunch Break:</label>
-                <input type="checkbox" id="lunchBreakMonday" name="lunchBreakMonday">
-                <label for="lunchBreakMonday"></label>
-                <label for="summaryMonday">Summary:</label>
-                <textarea name="summaryMonday"></textarea>
-                <label for="projectCodeMonday">Project Code:</label>
-                <input type="text" name="projectCodeMonday">
+                <label for="dateMonday${weekCount}" class="required">Date*:</label>
+                <input type="text" name="dateMonday${weekCount}" readonly required>
+                <label for="timeStartedMonday${weekCount}">Time Started:</label>
+                <input type="text" name="timeStartedMonday${weekCount}">
+                <label for="timeEndedMonday${weekCount}">Time Ended:</label>
+                <input type="text" name="timeEndedMonday${weekCount}">
+                <label for="lunchBreakMonday${weekCount}">Lunch Break:</label>
+                <label class="custom-checkbox">
+                    <input type="checkbox" id="lunchBreakMonday${weekCount}" name="lunchBreakMonday${weekCount}">
+                </label>
+                <label for="summaryMonday${weekCount}">Summary:</label>
+                <textarea name="summaryMonday${weekCount}"></textarea>
+                <label for="projectCodeMonday${weekCount}">Project Code:</label>
+                <input type="text" name="projectCodeMonday${weekCount}">
             </div>
             <div class="day-container">
                 <h2>Tuesday</h2>
-                <label for="dateTuesday" class="required">Date*:</label>
-                <input type="text" name="dateTuesday" readonly required>
-                <label for="timeStartedTuesday">Time Started:</label>
-                <input type="text" name="timeStartedTuesday">
-                <label for="timeEndedTuesday">Time Ended:</label>
-                <input type="text" name="timeEndedTuesday">
-                <label for="lunchBreakTuesday">Lunch Break:</label>
-                <input type="checkbox" id="lunchBreakTuesday" name="lunchBreakTuesday">
-                <label for="lunchBreakTuesday"></label>
-                <label for="summaryTuesday">Summary:</label>
-                <textarea name="summaryTuesday"></textarea>
-                <label for="projectCodeTuesday">Project Code:</label>
-                <input type="text" name="projectCodeTuesday">
+                <label for="dateTuesday${weekCount}" class="required">Date*:</label>
+                <input type="text" name="dateTuesday${weekCount}" readonly required>
+                <label for="timeStartedTuesday${weekCount}">Time Started:</label>
+                <input type="text" name="timeStartedTuesday${weekCount}">
+                <label for="timeEndedTuesday${weekCount}">Time Ended:</label>
+                <input type="text" name="timeEndedTuesday${weekCount}">
+                <label for="lunchBreakTuesday${weekCount}">Lunch Break:</label>
+                <label class="custom-checkbox">
+                    <input type="checkbox" id="lunchBreakTuesday${weekCount}" name="lunchBreakTuesday${weekCount}">
+                </label>
+                <label for="summaryTuesday${weekCount}">Summary:</label>
+                <textarea name="summaryTuesday${weekCount}"></textarea>
+                <label for="projectCodeTuesday${weekCount}">Project Code:</label>
+                <input type="text" name="projectCodeTuesday${weekCount}">
             </div>
             <div class="day-container">
                 <h2>Wednesday</h2>
-                <label for="dateWednesday" class="required">Date*:</label>
-                <input type="text" name="dateWednesday" readonly required>
-                <label for="timeStartedWednesday">Time Started:</label>
-                <input type="text" name="timeStartedWednesday">
-                <label for="timeEndedWednesday">Time Ended:</label>
-                <input type="text" name="timeEndedWednesday">
-                <label for="lunchBreakWednesday">Lunch Break:</label>
-                <input type="checkbox" id="lunchBreakWednesday" name="lunchBreakWednesday">
-                <label for="lunchBreakWednesday"></label>
-                <label for="summaryWednesday">Summary:</label>
-                <textarea name="summaryWednesday"></textarea>
-                <label for="projectCodeWednesday">Project Code:</label>
-                <input type="text" name="projectCodeWednesday">
+                <label for="dateWednesday${weekCount}" class="required">Date*:</label>
+                <input type="text" name="dateWednesday${weekCount}" readonly required>
+                <label for="timeStartedWednesday${weekCount}">Time Started:</label>
+                <input type="text" name="timeStartedWednesday${weekCount}">
+                <label for="timeEndedWednesday${weekCount}">Time Ended:</label>
+                <input type="text" name="timeEndedWednesday${weekCount}">
+                <label for="lunchBreakWednesday${weekCount}">Lunch Break:</label>
+                <label class="custom-checkbox">
+                    <input type="checkbox" id="lunchBreakWednesday${weekCount}" name="lunchBreakWednesday${weekCount}">
+                </label>
+                <label for="summaryWednesday${weekCount}">Summary:</label>
+                <textarea name="summaryWednesday${weekCount}"></textarea>
+                <label for="projectCodeWednesday${weekCount}">Project Code:</label>
+                <input type="text" name="projectCodeWednesday${weekCount}">
             </div>
             <div class="day-container">
                 <h2>Thursday</h2>
-                <label for="dateThursday" class="required">Date*:</label>
-                <input type="text" name="dateThursday" readonly required>
-                <label for="timeStartedThursday" class="required">Time Started:</label>
-                <input type="text" name="timeStartedThursday">
-                <label for="timeEndedThursday">Time Ended:</label>
-                <input type="text" name="timeEndedThursday">
-                <label for="lunchBreakThursday">Lunch Break:</label>
-                <input type="checkbox" id="lunchBreakThursday" name="lunchBreakThursday">
-                <label for="lunchBreakThursday"></label>
-                <label for="summaryThursday">Summary:</label>
-                <textarea name="summaryThursday"></textarea>
-                <label for="projectCodeThursday">Project Code:</label>
-                <input type="text" name="projectCodeThursday">
+                <label for="dateThursday${weekCount}" class="required">Date*:</label>
+                <input type="text" name="dateThursday${weekCount}" readonly required>
+                <label for="timeStartedThursday${weekCount}" class="required">Time Started:</label>
+                <input type="text" name="timeStartedThursday${weekCount}">
+                <label for="timeEndedThursday${weekCount}">Time Ended:</label>
+                <input type="text" name="timeEndedThursday${weekCount}">
+                <label for="lunchBreakThursday${weekCount}">Lunch Break:</label>
+                <label class="custom-checkbox">
+                    <input type="checkbox" id="lunchBreakThursday${weekCount}" name="lunchBreakThursday${weekCount}">
+                </label>
+                <label for="summaryThursday${weekCount}">Summary:</label>
+                <textarea name="summaryThursday${weekCount}"></textarea>
+                <label for="projectCodeThursday${weekCount}">Project Code:</label>
+                <input type="text" name="projectCodeThursday${weekCount}">
             </div>
             <div class="day-container">
                 <h2>Friday</h2>
-                <label for="dateFriday" class="required">Date*:</label>
-                <input type="text" name="dateFriday" readonly required>
-                <label for="timeStartedFriday">Time Started:</label>
-                <input type="text" name="timeStartedFriday">
-                <label for="timeEndedFriday">Time Ended:</label>
-                <input type="text" name="timeEndedFriday">
-                <label for="lunchBreakFriday">Lunch Break:</label>
-                <input type="checkbox" id="lunchBreakFriday" name="lunchBreakFriday">
-                <label for="lunchBreakFriday"></label>
-                <label for="summaryFriday">Summary:</label>
-                <textarea name="summaryFriday"></textarea>
-                <label for="projectCodeFriday">Project Code:</label>
-                <input type="text" name="projectCodeFriday">
+                <label for="dateFriday${weekCount}" class="required">Date*:</label>
+                <input type="text" name="dateFriday${weekCount}" readonly required>
+                <label for="timeStartedFriday${weekCount}">Time Started:</label>
+                <input type="text" name="timeStartedFriday${weekCount}">
+                <label for="timeEndedFriday${weekCount}">Time Ended:</label>
+                <input type="text" name="timeEndedFriday${weekCount}">
+                <label for="lunchBreakFriday${weekCount}">Lunch Break:</label>
+                <label class="custom-checkbox">
+                    <input type="checkbox" id="lunchBreakFriday${weekCount}" name="lunchBreakFriday${weekCount}">
+                </label>
+                <label for="summaryFriday${weekCount}">Summary:</label>
+                <textarea name="summaryFriday${weekCount}"></textarea>
+                <label for="projectCodeFriday${weekCount}">Project Code:</label>
+                <input type="text" name="projectCodeFriday${weekCount}">
             </div>
         `;
-
-        const weekContainer = document.createElement("div");
+        const weekContainer = document.createElement('div');
         weekContainer.innerHTML = weekTemplate;
-        const addWeekBtn = document.getElementById("addWeekBtn");
-        const reportForm = document.getElementById("reportForm");
-        reportForm.insertBefore(weekContainer, addWeekBtn);
-
-        weekCount++;
-        if (weekCount === 4) {
-            addWeekBtn.disabled = true;
-        }
-        // Keep the counter up to date
-        updateWeekCounter();
+        document.getElementById('weekContainers').appendChild(weekContainer);
     }
 }
 
@@ -192,13 +196,11 @@ function prePopulateDates() {
     }
 
     const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
-    const weekContainers = document.querySelectorAll('.day-container');
-
     let currentDate = new Date(startDate);
 
-    weekContainers.forEach((weekContainer) => {
+    for (let week = 1; week <= weekCount; week++) {
         daysOfWeek.forEach((day) => {
-            const dateField = weekContainer.querySelector(`[name="date${day}"]`);
+            const dateField = document.querySelector(`[name="date${day}${week}"]`);
             if (dateField) {
                 dateField.value = currentDate.toISOString().split('T')[0];
 
@@ -213,70 +215,72 @@ function prePopulateDates() {
                 }
             }
         });
-    });
+    }
 
     saveFormData(); // Save the pre-populated dates to local storage
 }
 
-function generateCSV() {
-    const form = document.getElementById('reportForm');
-    const requiredFields = form.querySelectorAll('[required]');
-    let valid = true;
+// Doing some math
+function calculateHours(timeStarted, timeEnded, lunchBreak) {
+    let hoursWorked = '';
 
-    requiredFields.forEach(field => {
-        if (!field.checkValidity()) {
-            valid = false;
-            field.reportValidity();
+    if (timeStarted && timeEnded) {
+        const [startHour, startMinute] = timeStarted.split(':').map(Number);
+        const [endHour, endMinute] = timeEnded.split(':').map(Number);
+        const startTime = new Date(1970, 0, 1, startHour, startMinute);
+        const endTime = new Date(1970, 0, 1, endHour, endMinute);
+        hoursWorked = (endTime - startTime) / (1000 * 60 * 60); // Convert milliseconds to hours
+
+        if (lunchBreak === 'Yes') {
+            const lunch = parseFloat(document.getElementById('lunchBreakLength').value) || 0; // Get lunch break length
+            hoursWorked -= lunch;
         }
-    });
 
-    if (!valid) {
-        alert("Please fill out all required fields.");
-        return;
+        hoursWorked = hoursWorked.toFixed(2);
     }
 
-    const formData = new FormData(form);
-    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+    return hoursWorked;
+}
+
+
+function generateCSV() {
     const csvData = [];
-    const headers = ['Day', 'Date', 'Time Started', 'Time Ended', 'Lunch Break', 'Summary', 'Project Code', 'Hours Worked'];
-    csvData.push(headers.join(',')); // Add headers to CSV data
     let totalHours = 0;
 
-    days.forEach(day => {
-        const date = formData.get(`date${day}`);
-        const timeStarted = formData.get(`timeStarted${day}`);
-        const timeEnded = formData.get(`timeEnded${day}`);
-        const lunchBreak = formData.get(`lunchBreak${day}`) === 'on';
-        const summary = formData.get(`summary${day}`);
-        const projectCode = formData.get(`projectCode${day}`);
+    // Add headers to CSV data
+    csvData.push(['Day', 'Date', 'Time Started', 'Time Ended', 'Lunch Break', 'Summary', 'Project Code', 'Total Hours'].join(','));
 
-        let hoursWorked = '';
-        if (date && timeStarted && timeEnded) {
-            const startTime = new Date(`1970-01-01T${timeStarted}:00`);
-            const endTime = new Date(`1970-01-01T${timeEnded}:00`);
-            hoursWorked = (endTime - startTime) / (1000 * 60 * 60); // Convert milliseconds to hours
+    for (let week = 1; week <= weekCount; week++) {
+        ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].forEach((day) => {
+            const dateField = document.querySelector(`[name="date${day}${week}"]`);
+            if (dateField) {
+                const date = dateField.value;
+                const timeStarted = document.querySelector(`[name="timeStarted${day}${week}"]`).value;
+                const timeEnded = document.querySelector(`[name="timeEnded${day}${week}"]`).value;
+                const lunchBreak = document.querySelector(`[name="lunchBreak${day}${week}"]`).checked ? 'Yes' : 'No';
+                const summary = document.querySelector(`[name="summary${day}${week}"]`).value;
+                const projectCode = document.querySelector(`[name="projectCode${day}${week}"]`).value;
 
-            if (lunchBreak) {
-                hoursWorked -= 0.5; // Subtract 0.5 hours for lunch break
+                const hoursWorked = calculateHours(timeStarted, timeEnded, lunchBreak);
+                if (hoursWorked) totalHours += parseFloat(hoursWorked);
+
+                csvData.push([day, date, timeStarted, timeEnded, lunchBreak, summary, projectCode, hoursWorked].join(','));
+            } else {
+                console.error(`Element with name date${day}${week} not found`);
             }
-
-            totalHours += hoursWorked;
-            hoursWorked = hoursWorked.toFixed(2);
-        }
-
-        const row = [day, date, timeStarted, timeEnded, lunchBreak ? 'Yes' : 'No', summary, projectCode, hoursWorked];
-        csvData.push(row.join(',')); // Add row to CSV data
-    });
-
-    csvData.push(['', '', '', '', '', '', 'Total Hours Worked', totalHours.toFixed(2)].join(','));
+        });
+    }
 
     const csvContent = csvData.join('\n');
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement('a');
+    const fileName = document.getElementById('filename').value || 'default_filename';
     link.href = URL.createObjectURL(blob);
-    link.download = 'weekly_report.csv';
+    link.download = `${fileName}.csv`;
     link.style.display = 'none';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
 }
+
+
