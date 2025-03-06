@@ -239,16 +239,17 @@ function calculateHours(timeStarted, timeEnded, lunchBreak) {
         hoursWorked = hoursWorked.toFixed(2);
     }
 
-    return hoursWorked;
+    return hoursWorked;    // Hours per day
 }
 
+// Add in totalHoursWorkedDuringWeek function and return the amount
 
 function generateCSV() {
     const csvData = [];
     let totalHours = 0;
 
     // Add headers to CSV data
-    csvData.push(['Day', 'Date', 'Time Started', 'Time Ended', 'Lunch Break', 'Summary', 'Project Code', 'Total Hours'].join(','));
+    csvData.push(['Day', 'Date', 'Time Started', 'Time Ended', 'Lunch Break', 'Summary', 'Project Code', 'Total Hours'].join(',')); // Change the character inside join('') to change separator
 
     for (let week = 1; week <= weekCount; week++) {
         ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].forEach((day) => {
@@ -264,7 +265,7 @@ function generateCSV() {
                 const hoursWorked = calculateHours(timeStarted, timeEnded, lunchBreak);
                 if (hoursWorked) totalHours += parseFloat(hoursWorked);
 
-                csvData.push([day, date, timeStarted, timeEnded, lunchBreak, summary, projectCode, hoursWorked].join(','));
+                csvData.push([day, date, timeStarted, timeEnded, lunchBreak, summary, projectCode, hoursWorked].join(',')); // Change the character inside join('') to change separator
             } else {
                 console.error(`Element with name date${day}${week} not found`);
             }
