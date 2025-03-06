@@ -27,6 +27,8 @@ Select start date to populate the date fields, fill in start time and end time f
 - Lunch break deduction
 - Adding weeks to weekly logging
 - Removing weeks from weekly logging
+- File name field
+- Lunch break length option
 
 ## To-Do list
 
@@ -36,5 +38,5 @@ for functions, most likely trying to add following:
 - login, and
 - logout
 - security measures (if anything private is handled)
-- File name field
-- Lunch break lenght option
+- Fix the total hours calculation (simple fix)
+- Separator change
