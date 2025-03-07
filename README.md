@@ -13,8 +13,9 @@ Select start date to populate the date fields, fill in start time and end time f
 4. Select "From text/CSV"
 5. Locate your file, most likely in dowloads folder...
 6. Select "import"
-7. Click "load", the default settings work and are okay.
-8. Wo-hoo! Your hours have beem logged into excel-file and you may save the excel file for later use.
+7. Click "load", check the settings and preview of the loaded table.
+8. Change separator to "£", or what ever may be set to be the separator.
+9. Wo-hoo! Your hours have beem logged into excel-file and you may save the excel file for later use.
 
 ## Functions
 
@@ -29,6 +30,9 @@ Select start date to populate the date fields, fill in start time and end time f
 - Removing weeks from weekly logging
 - File name field
 - Lunch break length option
+- Separator change made and marked in code
+- Total hours per week
+- Total hours overall
 
 ## To-Do list
 
@@ -38,5 +42,4 @@ for functions, most likely trying to add following:
 - login, and
 - logout
 - security measures (if anything private is handled)
-- Fix the total hours calculation (simple fix)
-- Separator change
+
