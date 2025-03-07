@@ -232,26 +232,51 @@ function calculateHours(timeStarted, timeEnded, lunchBreak) {
         hoursWorked = (endTime - startTime) / (1000 * 60 * 60); // Convert milliseconds to hours
 
         if (lunchBreak === 'Yes') {
-            const lunch = parseFloat(document.getElementById('lunchBreakLength').value) || 0; // Get lunch break length
+            const lunch = parseFloat(document.getElementById('lunchBreakLength').value) || 0; // Get lunch break length or 0
             hoursWorked -= lunch;
         }
 
         hoursWorked = hoursWorked.toFixed(2);
     }
 
-    return hoursWorked;    // Hours per day
+    return hoursWorked;
 }
 
-// Add in totalHoursWorkedDuringWeek function and return the amount
+// Function to calculate total hours worked during a single week
+function totalHoursWeek(week) {
+    let totalWeekHours = 0;
+
+    ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].forEach((day) => {
+        const timeStarted = document.querySelector(`[name="timeStarted${day}${week}"]`).value;
+        const timeEnded = document.querySelector(`[name="timeEnded${day}${week}"]`).value;
+        const lunchBreak = document.querySelector(`[name="lunchBreak${day}${week}"]`).checked ? 'Yes' : 'No';
+        const hoursWorked = calculateHours(timeStarted, timeEnded, lunchBreak);
+        if (hoursWorked) totalWeekHours += parseFloat(hoursWorked);
+    });
+
+    return totalWeekHours.toFixed(2);
+}
+
+// Function to calculate total hours worked during all weeks
+function totalHoursAllWeeks() {
+    let overallTotalHours = 0;
+
+    for (let week = 1; week <= weekCount; week++) {
+        overallTotalHours += parseFloat(totalHoursWeek(week));
+    }
+
+    return overallTotalHours.toFixed(2);
+}
 
 function generateCSV() {
     const csvData = [];
-    let totalHours = 0;
+    let totalCSVHours = 0;
 
     // Add headers to CSV data
-    csvData.push(['Day', 'Date', 'Time Started', 'Time Ended', 'Lunch Break', 'Summary', 'Project Code', 'Total Hours'].join(',')); // Change the character inside join('') to change separator
+    csvData.push(['Day', 'Date', 'Time Started', 'Time Ended', 'Lunch Break', 'Summary', 'Project Code', 'Total Hours'].join('£')); // change the separator in join('')
 
     for (let week = 1; week <= weekCount; week++) {
+        let weekTotal = 0;
         ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].forEach((day) => {
             const dateField = document.querySelector(`[name="date${day}${week}"]`);
             if (dateField) {
@@ -263,19 +288,26 @@ function generateCSV() {
                 const projectCode = document.querySelector(`[name="projectCode${day}${week}"]`).value;
 
                 const hoursWorked = calculateHours(timeStarted, timeEnded, lunchBreak);
-                if (hoursWorked) totalHours += parseFloat(hoursWorked);
-
-                csvData.push([day, date, timeStarted, timeEnded, lunchBreak, summary, projectCode, hoursWorked].join(',')); // Change the character inside join('') to change separator
+                if (hoursWorked) {
+                    totalCSVHours += parseFloat(hoursWorked);
+                    weekTotal += parseFloat(hoursWorked);
+                }
+                csvData.push([day, date, timeStarted, timeEnded, lunchBreak, summary, projectCode, hoursWorked].join(','));  // change the separator in join('')
             } else {
                 console.error(`Element with name date${day}${week} not found`);
             }
         });
+        // Add total hours for the week to the CSV
+        csvData.push(['Total Hours for Week', '', '', '', '', '', '', weekTotal.toFixed(2)].join('£'));
     }
+
+    // Add total hours for all weeks to the CSV
+    csvData.push(['Total Hours for All Weeks', '', '', '', '', '', '', totalCSVHours.toFixed(2)].join('£'));
 
     const csvContent = csvData.join('\n');
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement('a');
-    const fileName = document.getElementById('filename').value || 'default_filename';
+    const fileName = document.getElementById('filename').value || 'weekly_report_from_LogTool';
     link.href = URL.createObjectURL(blob);
     link.download = `${fileName}.csv`;
     link.style.display = 'none';
