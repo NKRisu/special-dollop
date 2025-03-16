@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('setWeekBtn').addEventListener('click', prePopulateDates);
     document.getElementById("addWeekBtn").addEventListener('click', addWeekToForm);
     document.getElementById("deleteWeekBtn").addEventListener('click', deleteWeekFromForm)
-
+    document.getElementById('saveBtn').addEventListener('click', saveWeeklyData);
 
     // Pre-load the first dynamic week
     addWeekToForm();
@@ -80,6 +80,7 @@ function updateWeekCounter() {
 // Initial week is there
 let weekCount = 1;
 
+// Function to add a week to the form
 function addWeekToForm() {
     if (weekCount < 4) {
         weekCount++; // Increment here for the week count with unique ID
@@ -176,7 +177,7 @@ function addWeekToForm() {
     }
 }
 
-
+// Function to get the Monday of a given week number and year
 function getMondayOfWeek(weekNumber, year) {
     const firstDayOfYear = new Date(year, 0, 1);
     const daysOffset = (weekNumber - 1) * 7;
@@ -185,6 +186,7 @@ function getMondayOfWeek(weekNumber, year) {
     return monday;
 }
 
+// Pre-populate dates based on week number and year
 function prePopulateDates() {
     const weekNumber = parseInt(document.getElementById('weekNumber').value);
     const year = parseInt(document.getElementById('year').value);
@@ -268,6 +270,14 @@ function totalHoursAllWeeks() {
     return overallTotalHours.toFixed(2);
 }
 
+function saveWeeklyData() {
+    // Create function to save data to created database here
+    // Create function to save data to created database here
+    // Create function to save data to created database here
+    // Create function to save data to created database here
+}
+
+// Function to generate CSV from form data
 function generateCSV() {
     const csvData = [];
     let totalCSVHours = 0;
@@ -292,7 +302,7 @@ function generateCSV() {
                     totalCSVHours += parseFloat(hoursWorked);
                     weekTotal += parseFloat(hoursWorked);
                 }
-                csvData.push([day, date, timeStarted, timeEnded, lunchBreak, summary, projectCode, hoursWorked].join(','));  // change the separator in join('')
+                csvData.push([day, date, timeStarted, timeEnded, lunchBreak, summary, projectCode, hoursWorked].join('£'));  // change the separator in join('')
             } else {
                 console.error(`Element with name date${day}${week} not found`);
             }
@@ -315,5 +325,3 @@ function generateCSV() {
     link.click();
     document.body.removeChild(link);
 }
-
-

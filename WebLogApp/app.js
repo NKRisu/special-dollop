@@ -23,8 +23,17 @@ async function handler(req) {
         return await serveStaticFile(filePath, contentType);
     }
 
-    // Route: Weekly page
+    // Route: Login page
     if (url.pathname === "/" && req.method === "GET") {
+        const response = await serveStaticFile('./views/login.html', 'text/html');
+        response.headers.set("Content-Security-Policy", "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self'; connect-src 'self'");
+        response.headers.set("X-Frame-Options", "DENY");
+        response.headers.set("X-Content-Type-Options", "nosniff");
+        return response;
+    }
+
+    // Route: Weekly page
+    if (url.pathname === "/weekly" && req.method === "GET") {
         const response = await serveStaticFile('./views/weekly.html', 'text/html');
         response.headers.set("Content-Security-Policy", "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self'; connect-src 'self'");
         response.headers.set("X-Frame-Options", "DENY");

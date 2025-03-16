@@ -16,7 +16,6 @@ body {
     text-align: center;
     padding: 10px;
     position: absolute;
-    left: 0;
     bottom: -400px;
     transition: bottom 0.5s ease;
   }
@@ -57,6 +56,7 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     width: calc(100% - 1rem);
     max-width: 1200px;
+    min-width: auto;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -68,39 +68,78 @@ body {
     padding: 0.5rem;
     margin: 0.5rem;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     width: calc(100% - 1rem);
     max-width: 1200px;
+    min-width: auto;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    box-sizing: border-box;
+  }
+
+  .navigation {
+    background-color: #ffffff;
+    padding: 0.5rem;
+    padding-bottom: 1.5rem;
+    margin: 0.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 1185px;
+    min-width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 2rem;
+}
+
+  .login-container {
+    background-color: #ffffff;
+    padding: 2rem;
+    margin: 0.5rem;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    width: calc(100% - 1rem);
+    max-width: 800px;
+    min-width: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 1rem 0;
+    box-sizing: border-box;
   }
   
   #weekContainers {
     background-color: #ffffff;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
     width: 100%;
     max-width: 1200px;
+    min-width: auto;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     margin: 1rem 0;
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    box-sizing: border-box;
   }
   
   .notification-container {
     background-color: #ffffff;
     padding: 1rem;
+    margin: 0.5rem;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 1200px;
     min-width: auto;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 1rem;
     margin-bottom: 1rem;
     box-sizing: border-box; /* Include padding and border in the element's total width and height */
   }
@@ -146,7 +185,7 @@ body {
     background-color: #e20e4a9f;
   }
   
-  /* Required field indicator */
+  /* Required field indicator depracated*/
   label.required:after {
     content: '*';
     color: #e20e49;

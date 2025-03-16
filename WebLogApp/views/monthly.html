@@ -9,8 +9,15 @@
 <body>
     <div class="container">
         <div class="navigation">
-            <a href="/"><button>Go to Weekly Log</button></a>
+            <a href="/weekly"><button>Go to Weekly Log</button></a>
+            <a href="/"><button>Sign out</button></a>
         </div>
+        <div class="notification-container">
+            <div>
+                <h5>Fields marked with * must be filled. These will auto-fill the week fields. For weeks with zero hours, mark 0.</h5>
+            </div>
+        </div>
+        <!-- This is a bit clumsy, but for 4 containers this is manageable -->
         <form id="reportForm">
             <div class="week-container">
                 <div class="start-date-container">
@@ -20,62 +27,68 @@
                     <label for="year" class="required">Year*:</label>
                     <input type="number" id="year" min="1900" max="2100" required>
                     <button type="button" id="setMonthBtn">Set Month</button>
+                    <div>
+                        <h5>Set file name.</h5>
+                        <input type="text" id="filename" placeholder="Enter file name">
+                      </div>
+                    </div>
+                <div class="week-container">
+                    <h2>Week 1</h2>
+                    <label for="week1" class="required">Week*:</label>
+                    <input type="text" name="week1" readonly required>
+                    <label for="weeklyHours1" class="required">Weekly Hours*:</label>
+                    <input type="number" name="weeklyHours1" step="0.25" required>
+                    <label for="projectCode1" class="required">Project Code*:</label>
+                    <input type="text" name="projectCode1" required>
+                    <label for="summary1">Summary:</label>
+                    <textarea name="summary1"></textarea>
+                </div>    
+                <div class="week-container">
+                    <h2>Week 2</h2>
+                    <label for="week2" class="required">Week*:</label>
+                    <input type="text" name="week2" readonly required>
+                    <label for="weeklyHours2" class="required">Weekly Hours*:</label>
+                    <input type="number" name="weeklyHours2" step="0.25" required>
+                    <label for="projectCode2" class="required">Project Code*:</label>
+                    <input type="text" name="projectCode2" required>
+                    <label for="summary2">Summary:</label>
+                    <textarea name="summary2"></textarea>
                 </div>
-                <h2>Week 1</h2>
-                <label for="week1" class="required">Week*:</label>
-                <input type="text" name="week1" readonly required>
-                <label for="weeklyHours1" class="required">Weekly Hours*:</label>
-                <input type="number" name="weeklyHours1" step="0.01" step="0.25" required>
-                <label for="projectCode1" class="required">Project Code*:</label>
-                <input type="text" name="projectCode1" required>
-                <label for="summary1">Summary:</label>
-                <textarea name="summary1"></textarea>
-            </div>
-            <div class="week-container">
-                <h2>Week 2</h2>
-                <label for="week2" class="required">Week*:</label>
-                <input type="text" name="week2" readonly required>
-                <label for="weeklyHours2" class="required">Weekly Hours*:</label>
-                <input type="number" name="weeklyHours2" step="0.01" step="0.25" required>
-                <label for="projectCode2" class="required">Project Code*:</label>
-                <input type="text" name="projectCode2" required>
-                <label for="summary2">Summary:</label>
-                <textarea name="summary2"></textarea>
-            </div>
-            <div class="week-container">
-                <h2>Week 3</h2>
-                <label for="week3" class="required">Week*:</label>
-                <input type="text" name="week3" readonly required>
-                <label for="weeklyHours3" class="required">Weekly Hours*:</label>
-                <input type="number" name="weeklyHours3" step="0.01" step="0.25" required>
-                <label for="projectCode3" class="required">Project Code*:</label>
-                <input type="text" name="projectCode3" required>
-                <label for="summary3">Summary:</label>
-                <textarea name="summary3"></textarea>
-            </div>
-            <div class="week-container">
-                <h2>Week 4</h2>
-                <label for="week4" class="required">Week*:</label>
-                <input type="text" name="week4" readonly required>
-                <label for="weeklyHours4" class="required">Weekly Hours*:</label>
-                <input type="number" name="weeklyHours4" step="0.01" step="0.25" required>
-                <label for="projectCode4" class="required">Project Code*:</label>
-                <input type="text" name="projectCode4" required>
-                <label for="summary4">Summary:</label>
-                <textarea name="summary4"></textarea>
-            </div>
-            <div class="notification-container">
-                <div>
-                    <h5>Fields marked with * must be filled. These will auto-fill for the days. For weeks with zero hours, mark 0.</h5>
+                <div class="week-container">
+                    <h2>Week 3</h2>
+                    <label for="week3" class="required">Week*:</label>
+                    <input type="text" name="week3" readonly required>
+                    <label for="weeklyHours3" class="required">Weekly Hours*:</label>
+                    <input type="number" name="weeklyHours3" step="0.25" required>
+                    <label for="projectCode3" class="required">Project Code*:</label>
+                    <input type="text" name="projectCode3" required>
+                    <label for="summary3">Summary:</label>
+                    <textarea name="summary3"></textarea>
                 </div>
-            </div>
+                <div class="week-container">
+                    <h2>Week 4</h2>
+                    <label for="week4" class="required">Week*:</label>
+                    <input type="text" name="week4" readonly required>
+                    <label for="weeklyHours4" class="required">Weekly Hours*:</label>
+                    <input type="number" name="weeklyHours4" step="0.25" required>
+                    <label for="projectCode4" class="required">Project Code*:</label>
+                    <input type="text" name="projectCode4" required>
+                    <label for="summary4">Summary:</label>
+                    <textarea name="summary4"></textarea>
+                </div>
+            <div class="navigation">   
             <button id="downloadBtn" type="button">Download CSV</button>
+            <button id="saveBtn" type="button">Save log file</button>
+            </div>
+        </div>
         </form>
     </div>
     <script src="/static/monthlypage.js"></script>
     <div class="banner">
         <img src="/static/images/logos-english-all.jpg" alt="logos of all the participating organisations in AIMLearning.">
     </div>
+    <!-- This could be moved into JS-file instead to keep HTML script free -->
+    <!-- This should keep the banner hidden and show it when scrolling down, kind of works? needs bit of work -->
     <script>
         document.querySelector('.container').addEventListener('scroll', function() {
             const banner = document.querySelector('.banner');

@@ -10,10 +10,11 @@
     <div class="container">
         <div class="navigation">
             <a href="/monthly"><button>Go to Monthly Log</button></a>
+            <a href="/"><button>Sign out</button></a>
         </div>
         <div class="notification-container">
             <div>
-                <h5>Fields marked with * must be filled. These will auto-fill for the days.</h5>
+                <h5>Fields marked with * must be filled. These will auto-fill the date fields. For days off, leave fields empty.</h5>
             </div>
         </div>
         <form id="reportForm">
@@ -28,7 +29,6 @@
                     <div>
                         <h5>Set lunch break length.</h5>
                         <input type="number" name="lunchBreakLength"id="lunchBreakLength" min="0.00" max="1.00" step="0.25">
-                        <button type="button" id="setLunchBreakLength">Set lunch break</button>
                   </div>
                   <div>
                     <h5>Set file name.</h5>
@@ -40,11 +40,13 @@
             <button id="addWeekBtn" type="button">Add a Week</button>
             <button id="deleteWeekBtn" type="button">Delete a Week</button>
             <button id="downloadBtn" type="button">Download CSV</button>
+            <button id="saveBtn" type="button">Save log file</button>
         </form>
     </div>
     <script src="/static/weeklypage.js"></script>
+</div>
     <div class="banner">
         <img src="/static/images/logos-english-all.jpg" alt="logos of all the participating organisations in AIMLearning.">
-    </div>    
+    </div> 
 </body>
 </html>
