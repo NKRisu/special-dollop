@@ -1,3 +1,6 @@
+
+// Fix imports and exports
+
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('downloadBtn').addEventListener('click', generateCSV);
     document.getElementById('setWeekBtn').addEventListener('click', prePopulateDates);
@@ -15,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateWeekCounter();
 });
 
-// Rudimentary "session" handling
+// Fix session handling, form data saving 
 function saveFormData() {
     const form = document.getElementById('reportForm');
     const formData = new FormData(form);

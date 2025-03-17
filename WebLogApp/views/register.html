@@ -1,0 +1,41 @@
+
+<!-- Fix some formatting issues -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Page</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <form id="loginForm">
+        <div class="login-container">
+            <div class="notification-container">
+                <div>
+                    <h5>LogTool registration page, please create a new account.</h5>
+                </div>
+            </div>
+            <div class="navigation">
+                <label for="username">Email:</label>
+                <input type="email" id="username" name="username" placeholder="Enter your email" required>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+
+                <label for="role">Role:</label>
+                <select id="role" name="role">
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+            <div class="navigation">
+                <button type="submit">Create Account</button>
+            </div>
+        </div>       
+    </form>
+    <div class="banner">
+        <img src="/static/images/logos-english-all.jpg" alt="logos of all the participating organisations in AIMLearning.">
+    </div>  
+</body>
+</html>

@@ -32,6 +32,15 @@ async function handler(req) {
         return response;
     }
 
+    // Route: Register page
+    if (url.pathname === "/register" && req.method === "GET") {
+        const response = await serveStaticFile('./views/register.html', 'text/html');
+        response.headers.set("Content-Security-Policy", "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self'; connect-src 'self'");
+        response.headers.set("X-Frame-Options", "DENY");
+        response.headers.set("X-Content-Type-Options", "nosniff");
+        return response;
+    }
+
     // Route: Weekly page
     if (url.pathname === "/weekly" && req.method === "GET") {
         const response = await serveStaticFile('./views/weekly.html', 'text/html');
@@ -51,6 +60,10 @@ async function handler(req) {
     }
 
     return new Response("Not Found", { status: 404 });
+
+
+    // Route: Handle POST requests
+    // Route: Redirections after actions. Account creation, login, form data save to DB, etc.
 }
 
 // Utility: Get content type for static files
