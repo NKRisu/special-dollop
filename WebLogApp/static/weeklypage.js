@@ -1,6 +1,3 @@
-
-// Fix imports and exports
-
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('downloadBtn').addEventListener('click', generateCSV);
     document.getElementById('setWeekBtn').addEventListener('click', prePopulateDates);
@@ -273,11 +270,33 @@ function totalHoursAllWeeks() {
     return overallTotalHours.toFixed(2);
 }
 
-function saveWeeklyData() {
-    // Create function to save data to created database here
-    // Create function to save data to created database here
-    // Create function to save data to created database here
-    // Create function to save data to created database here
+// Function to save weekly data to the database
+async function saveWeeklyData() {
+    const form = document.getElementById('reportForm');
+    const formData = new FormData(form);
+    const data = {};
+    formData.forEach((value, key) => {
+        data[key] = value;
+    });
+
+    try {
+        const response = await fetch('/save-weekly-data', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+            window.location.href = '/confirmation-weekly'; // Redirect to confirmation page
+        } else {
+            alert('Failed to save weekly data.');
+        }
+    } catch (error) {
+        console.error('Error saving weekly data:', error);
+        alert('An error occurred while saving weekly data.');
+    }
 }
 
 // Function to generate CSV from form data

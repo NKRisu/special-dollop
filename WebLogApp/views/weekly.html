@@ -18,17 +18,18 @@
             </div>
         </div>
         <form id="reportForm">
+            <input type="hidden" id="user_token" name="user_token" value="<!-- user token from sessionService here -->">
             <div class="day-container">
                 <div class="start-date-container">                     
                     <h2>Weekly Work Hours - LogTool</h2>
                     <label for="weekNumber" class="required">Week Number*:</label>
-                    <input type="number" id="weekNumber" min="1" max="53" required>
+                    <input type="number" id="weekNumber" name="week_number" min="1" max="53" required>
                     <label for="year" class="required">Year*:</label>
-                    <input type="number" id="year" min="1900" max="2100" required>
+                    <input type="number" id="year" name="year" min="1900" max="2100" required>
                     <button type="button" id="setWeekBtn">Set Week</button>
                     <div>
                         <h5>Set lunch break length.</h5>
-                        <input type="number" name="lunchBreakLength"id="lunchBreakLength" min="0.00" max="1.00" step="0.25">
+                        <input type="number" name="lunchBreakLength" id="lunchBreakLength" min="0.00" max="1.00" step="0.25">
                   </div>
                   <div>
                     <h5>Set file name.</h5>

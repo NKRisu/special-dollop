@@ -6,25 +6,28 @@
     <title>Login Page</title>
     <link rel="stylesheet" href="/static/styles.css">
 </head>
-<body>
-    <form id="loginForm">
-        <div class="login-container">
-            <div class="notification-container">
-                <div>
-                    <h5>LogTool Login page, please login or create a new account.</h5>
-                </div>
+<body> 
+    <div class="login-container">
+        <div class="notification-container">
+            <div>
+                <h5>LogTool Login page, please login or create a new account.</h5>
+                <a href="/register"><button type="button">Create account</button></a>
+            </div>
+        </div>
+        <form id="loginForm" action="/login" method="POST">
+            <div class="navigation">
+                <label for="username">Email:</label>
+                <input type="email" id="username" name="username" placeholder="Enter your email" required>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
             </div>
             <div class="navigation">
-                <input type="text" placeholder="Username" required>
-                <input type="password" placeholder="Password" required>
+                <button type="submit">Login</button>
             </div>
-            <div class="navigation">
-                <button type="button">Login</button>
-                <button type="button" class="create-user">Create Account</button>
-            </div>
-        </div>       
-    </form>
-    <script src="/static/loginpage.js"></script>
+        </form>
+    </div>
+    <script type="module" src="/static/loginpage.js"></script>
     <div class="banner">
         <img src="/static/images/logos-english-all.jpg" alt="logos of all the participating organisations in AIMLearning.">
     </div>  

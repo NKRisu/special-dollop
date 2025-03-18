@@ -1,0 +1,26 @@
+Test inserts into database:
+
+INSERT INTO zephyr_users (username, password_hash, role) VALUES ('testuser@example.com', 'hashedpassword', 'user');
+
+INSERT INTO zephyr_weekly_logs (user_token, week_number, year, day, date, time_started, time_ended, lunch_break, summary, project_code, hours_worked)
+VALUES ('b5e46a6b-4e47-448b-9d53-06bf2634f66e', 10, 2025, 'Monday', '2025-03-17', '09:00:00', '17:00:00', true, 'Worked on project X', 'PROJX', 8.00);
+
+INSERT INTO zephyr_monthly_logs (user_token, month, year, total_hours)
+VALUES ('b5e46a6b-4e47-448b-9d53-06bf2634f66e', 3, 2025, 160.00);
+
+INSERT INTO zephyr_admin_logs (admin_id, action, resource_id)
+VALUES (1, 'Created new user', NULL);
+
+Verifications:
+
+-- Verify data in zephyr_users
+SELECT * FROM zephyr_users;
+
+-- Verify data in zephyr_weekly_logs
+SELECT * FROM zephyr_weekly_logs;
+
+-- Verify data in zephyr_monthly_logs
+SELECT * FROM zephyr_monthly_logs;
+
+-- Verify data in zephyr_admin_logs
+SELECT * FROM zephyr_admin_logs;

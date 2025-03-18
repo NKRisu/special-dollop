@@ -1,5 +1,3 @@
-
-<!-- Fix some formatting issues -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,28 +7,23 @@
     <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
-    <form id="loginForm">
+    <form id="registerForm" action="/register" method="POST">
         <div class="login-container">
             <div class="notification-container">
                 <div>
                     <h5>LogTool registration page, please create a new account.</h5>
                 </div>
             </div>
-            <div class="navigation">
+            <div class="registration">
                 <label for="username">Email:</label>
                 <input type="email" id="username" name="username" placeholder="Enter your email" required>
 
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" placeholder="Enter your password" required>
-
-                <label for="role">Role:</label>
-                <select id="role" name="role">
-                    <option value="user">User</option>
-                    <option value="admin">Admin</option>
-                </select>
             </div>
             <div class="navigation">
                 <button type="submit">Create Account</button>
+                <a href="/"><button type="button">Go back</button></a>
             </div>
         </div>       
     </form>

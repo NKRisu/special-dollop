@@ -1,37 +1,7 @@
-
 import { z } from "https://deno.land/x/zod@v3.16.1/mod.ts"; // For validation
 import * as bcrypt from "https://deno.land/x/bcrypt/mod.ts"; // For password comparison
+import client from '../db/db.js'; // Import the database client
 
-document.addEventListener("DOMContentLoaded", () => {
-    const loginButton = document.querySelector('button[type="button"]');
-    const createUserButton = document.querySelector('button.create-user');
-    const loginContainer = document.querySelector('.login-container');
-    const form = document.getElementById('loginForm');
-
-    if (loginButton && createUserButton && loginContainer && form) {
-        loginButton.addEventListener('click', handleLogin);
-        createUserButton.addEventListener('click', handleCreateUser);
-
-        // Save form data to local storage on input change
-        form.addEventListener("input", saveFormData);
-
-        // Enter key tries to sign in, usability improvement
-        loginContainer.addEventListener("keydown", (event) => {
-            if (event.key === "Enter") {
-                handleLogin();
-            }
-        });
-    }
-
-    function saveFormData() {
-        const formData = new FormData(form);
-        const data = {};
-        formData.forEach((value, key) => {
-            data[key] = value;
-        });
-        localStorage.setItem("formData", JSON.stringify(data));
-    }
-});
 
 const loginSchema = z.object({
     username: z.string().email({ message: "Invalid email address." }),
@@ -40,7 +10,7 @@ const loginSchema = z.object({
 
 async function logLogin(userUUID, ipAddress) {
     try {
-        await clientInformation.queryArray(
+        await client.queryArray(
             `INSERT INTO login_logs (user_token, ip_address) VALUES ($1, $2)`,
             [userUUID, ipAddress],
         );
@@ -51,7 +21,7 @@ async function logLogin(userUUID, ipAddress) {
 
 async function getUserByEmail(email) {
     try {
-        const result = await clientInformation.queryArray(`SELECT username, password_hash, user_token, role FROM zephyr_users WHERE username = $1`,[email]);
+        const result = await client.queryArray(`SELECT username, password_hash, user_token, role FROM zephyr_users WHERE username = $1`,[email]);
         return result.rows.length > 0 ? result.rows[0] : null;
     } catch (error) {
         console.error("Error fetching user by email:", error);

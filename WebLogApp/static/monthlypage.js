@@ -1,6 +1,3 @@
-
-// Fix imports and exports
-
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('downloadBtn').addEventListener('click', generateCSV);
     document.getElementById('setMonthBtn').addEventListener('click', prePopulateWeeks);
@@ -66,11 +63,33 @@ function prePopulateWeeks() {
     saveFormData(); // Save the pre-populated weeks to local storage
 }
 
-function saveMonthlyData() {
-    // Create function to save data to created database here
-    // Create function to save data to created database here
-    // Create function to save data to created database here
-    // Create function to save data to created database here
+// Function to save weekly data to the database
+async function saveMonthlyData() {
+    const form = document.getElementById('reportForm');
+    const formData = new FormData(form);
+    const data = {};
+    formData.forEach((value, key) => {
+        data[key] = value;
+    });
+
+    try {
+        const response = await fetch('/save-monthly-data', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+            window.location.href = '/confirmation-monthly'; // Redirect to confirmation page
+        } else {
+            alert('Failed to save monthly data.');
+        }
+    } catch (error) {
+        console.error('Error saving monthly data:', error);
+        alert('An error occurred while saving monthly data.');
+    }
 }
 
 // Generate CSV file from form data

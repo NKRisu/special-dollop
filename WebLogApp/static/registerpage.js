@@ -1,5 +1,4 @@
 
-// Fix the password showing in URL lmao
 
 import client from '../db/db.js';
 import * as bcrypt from "https://deno.land/x/bcrypt/mod.ts";
