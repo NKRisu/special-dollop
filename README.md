@@ -1,4 +1,4 @@
-# special-dollop-repository.LogTool webapp for logging in working hours with summary and details.
+# LogTool webapp for logging in working hours with summary and details.
 Webapp for logging in hours, short summary and stuff
 
 
