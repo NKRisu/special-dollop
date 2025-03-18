@@ -33,14 +33,15 @@ Select start date to populate the date fields, fill in start time and end time f
 - Separator change made and marked in code
 - Total hours per week
 - Total hours overall
-- Mock functionality for login, sign out using local storage
 - Code comments
-- Prepped for database functinality with save log file buttons
+- Database functionality almost there.
+- Index page, login page, account creation page
+- Confirmation pages for actions done
 
 ## To-Do list
 
 for functions, most likely trying to add following:
-- Combining weekly and monthly datas
+
 - Database functionality
 - security measures (if anything private is handled)
 
