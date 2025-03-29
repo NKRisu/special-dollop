@@ -34,14 +34,15 @@ Select start date to populate the date fields, fill in start time and end time f
 - Total hours per week
 - Total hours overall
 - Code comments
-- Database functionality almost there.
 - Index page, login page, account creation page
 - Confirmation pages for actions done
+- Database functionality for account creation, login, sign out, weekly and monthly logs
 
 ## To-Do list
 
-for functions, most likely trying to add following:
+add and improve the following subjets:
 
-- Database functionality
-- security measures (if anything private is handled)
+- Security measures
+- Admin functionality
+- Production readiness soonTM
 
