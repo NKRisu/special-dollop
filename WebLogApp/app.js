@@ -33,74 +33,60 @@ async function handler(req) {
     if (url.pathname === "/db/db.js" && req.method === "GET") {
         return await serveStaticFile('./db/db.js', 'application/javascript');
     }
-    // GET
+
     // Route: Index page
     if (url.pathname === "/" && req.method === "GET") {
         const response = await serveStaticFile('./views/index.html', 'text/html');
-        response.headers.set("Content-Security-Policy", "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://deno.land; style-src 'self' 'unsafe-inline'; img-src 'self'; connect-src 'self'");
-        response.headers.set("X-Frame-Options", "DENY");
-        response.headers.set("X-Content-Type-Options", "nosniff");
+        addSecurityHeaders(response);
         return response;
     }
 
     // Route: Homepage page
     if (url.pathname === "/homepage" && req.method === "GET") {
         const response = await serveStaticFile('./views/homepage.html', 'text/html');
-        response.headers.set("Content-Security-Policy", "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://deno.land; style-src 'self' 'unsafe-inline'; img-src 'self'; connect-src 'self'");
-        response.headers.set("X-Frame-Options", "DENY");
-        response.headers.set("X-Content-Type-Options", "nosniff");
+        addSecurityHeaders(response);
         return response;
     }
 
     // Route: Login page
     if (url.pathname === "/login" && req.method === "GET") {
         const response = await serveStaticFile('./views/login.html', 'text/html');
-        response.headers.set("Content-Security-Policy", "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://deno.land; style-src 'self' 'unsafe-inline'; img-src 'self'; connect-src 'self'");
-        response.headers.set("X-Frame-Options", "DENY");
-        response.headers.set("X-Content-Type-Options", "nosniff");
+        addSecurityHeaders(response);
         return response;
     }
 
     // Route: Register page
     if (url.pathname === "/register" && req.method === "GET") {
         const response = await serveStaticFile('./views/register.html', 'text/html');
-        response.headers.set("Content-Security-Policy", "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://deno.land; style-src 'self' 'unsafe-inline'; img-src 'self'; connect-src 'self'");
-        response.headers.set("X-Frame-Options", "DENY");
-        response.headers.set("X-Content-Type-Options", "nosniff");
+        addSecurityHeaders(response);
         return response;
     }
 
-   // Route: Registration confirmation page
+    // Route: Registration confirmation page
     if (url.pathname === "/registration-confirmation.html" && req.method === "GET") {
         const response = await serveStaticFile("./views/registration-confirmation.html", "text/html");
-        response.headers.set("Content-Security-Policy", "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://deno.land; style-src 'self' 'unsafe-inline'; img-src 'self'; connect-src 'self'");
-        response.headers.set("X-Frame-Options", "DENY");
-        response.headers.set("X-Content-Type-Options", "nosniff");
+        addSecurityHeaders(response);
         return response;
     }
 
     // Route: Weekly Confirmation Page
     if (url.pathname === "/confirmation-weekly" && req.method === "GET") {
         const response = await serveStaticFile('./views/weekly-confirmation.html', 'text/html');
-        response.headers.set("Content-Security-Policy", "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://deno.land; style-src 'self' 'unsafe-inline'; img-src 'self'; connect-src 'self'");
-        response.headers.set("X-Frame-Options", "DENY");
-        response.headers.set("X-Content-Type-Options", "nosniff");
+        addSecurityHeaders(response);
         return response;
     }
 
     // Route: Monthly Confirmation Page
     if (url.pathname === "/confirmation-monthly" && req.method === "GET") {
         const response = await serveStaticFile('./views/monthly-confirmation.html', 'text/html');
-        response.headers.set("Content-Security-Policy", "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://deno.land; style-src 'self' 'unsafe-inline'; img-src 'self'; connect-src 'self'");
-        response.headers.set("X-Frame-Options", "DENY");
-        response.headers.set("X-Content-Type-Options", "nosniff");
+        addSecurityHeaders(response);
         return response;
     }
 
     // Route: Weekly page
     if (url.pathname === "/weekly" && req.method === "GET") {
         const session = getSession(req); // Retrieve the session
-    
+
         if (!session || !session.user_token) {
             // Redirect to login if session or user_token is missing
             return new Response(null, {
@@ -108,38 +94,31 @@ async function handler(req) {
                 headers: { location: "/login" },
             });
         }
-    
+
         // Read the weekly.html file
         let html = await Deno.readTextFile('./views/weekly.html');
-    
+
         // Inject the user_token into the HTML
         html = html.replace(
             '<input type="hidden" id="user_token" name="user_token" value="">',
             `<input type="hidden" id="user_token" name="user_token" value="${session.user_token}">`
         );
-    
+
         const response = new Response(html, {
             headers: { "Content-Type": "text/html" },
         });
-    
-        // Add security headers
-        response.headers.set("Content-Security-Policy", "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://deno.land; style-src 'self' 'unsafe-inline'; img-src 'self'; connect-src 'self'");
-        response.headers.set("X-Frame-Options", "DENY");
-        response.headers.set("X-Content-Type-Options", "nosniff");
-    
+
+        addSecurityHeaders(response);
         return response;
     }
 
     // Route: Monthly page
     if (url.pathname === "/monthly" && req.method === "GET") {
         const response = await serveStaticFile('./views/monthly.html', 'text/html');
-        response.headers.set("Content-Security-Policy", "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://deno.land; style-src 'self' 'unsafe-inline'; img-src 'self'; connect-src 'self'");
-        response.headers.set("X-Frame-Options", "DENY");
-        response.headers.set("X-Content-Type-Options", "nosniff");
+        addSecurityHeaders(response);
         return response;
     }
 
-    // POST
     // Route: Registration
     if (url.pathname === "/register" && req.method === "POST") {
         const formData = await req.formData(); // Parse the form data
@@ -175,17 +154,120 @@ async function handler(req) {
             },
         });
     }
-    
-    // Route: Save monthly data
-if (url.pathname === "/save-monthly-data" && req.method === "POST") {
-    const body = await req.json();
-    console.log("Data received from client:", body); // Log the received data
 
-    const result = await saveMonthlyData(body);
-    if (result) {
-        return new Response("Monthly data saved successfully", { status: 200 });
-    } else {
-        return new Response("Failed to save monthly data", { status: 500 });
+    // Route: Save monthly data
+    if (url.pathname === "/save-monthly-data" && req.method === "POST") {
+        const body = await req.json();
+        console.log("Data received from client:", body); // Log the received data
+
+        const result = await saveMonthlyData(body);
+        if (result) {
+            return new Response("Monthly data saved successfully", { status: 200 });
+        } else {
+            return new Response("Failed to save monthly data", { status: 500 });
+        }
+    }
+
+    // Route: Save weekly data
+    if (url.pathname === "/save-weekly-data" && req.method === "POST") {
+        const body = await req.json();
+        console.log("Data received from client:", body); // Log the received data
+
+        const result = await saveWeeklyData(body);
+        if (result) {
+            return new Response("Weekly data saved successfully", { status: 200 });
+        } else {
+            return new Response("Failed to save weekly data", { status: 500 });
+        }
+    }
+
+    return new Response("Not Found", { status: 404 });
+}
+
+// Function to save weekly data to the database
+async function saveWeeklyData(data) {
+    try {
+        const userToken = data.user_token; // Assuming user_token is included in the data from session service
+        const weekNumber = parseInt(data.week_number); // Assuming week_number is included in the data from session service
+        const year = parseInt(data.year); // Assuming year is included in the data from session service
+
+        // Dynamically determine the active weeks
+        const activeWeeks = [1, 2, 3, 4]; // Adjust this if the active weeks are stored elsewhere
+
+        const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+        for (const week of activeWeeks) {
+            for (const day of daysOfWeek) {
+                const dateKey = `date${day}${week}`;
+                const timeStartedKey = `timeStarted${day}${week}`;
+                const timeEndedKey = `timeEnded${day}${week}`;
+                const lunchBreakKey = `lunchBreak${day}${week}`;
+                const summaryKey = `summary${day}${week}`;
+                const projectCodeKey = `projectCode${day}${week}`;
+                const hoursWorkedKey = `hoursWorked${day}${week}`;
+
+                console.log(`Accessing keys:`, {
+                    dateKey,
+                    timeStartedKey,
+                    timeEndedKey,
+                    lunchBreakKey,
+                    summaryKey,
+                    projectCodeKey,
+                    hoursWorkedKey,
+                });
+
+                const date = data[dateKey];
+                let timeStarted = data[timeStartedKey];
+                let timeEnded = data[timeEndedKey];
+                const lunchBreak = data[lunchBreakKey] === 'on';
+                const summary = data[summaryKey];
+                const projectCode = data[projectCodeKey];
+                const hoursWorked = parseFloat(data[hoursWorkedKey]);
+
+                // Log the values being accessed
+                console.log(`Values for ${day} (Week ${week}):`, {
+                    date,
+                    timeStarted,
+                    timeEnded,
+                    lunchBreak,
+                    summary,
+                    projectCode,
+                    hoursWorked,
+                });
+
+                // Validate the date field
+                if (!date) {
+                    console.error(`Skipping ${day} (Week ${week}): Missing date.`);
+                    continue; // Skip this day if the date is missing
+                }
+
+                // Handle empty time fields
+                timeStarted = timeStarted ? `${timeStarted}:00` : null; // Append seconds if missing
+                timeEnded = timeEnded ? `${timeEnded}:00` : null;
+
+                console.log(`Inserting data for ${day} (Week ${weekNumber}):`, {
+                    userToken,
+                    weekNumber,
+                    year,
+                    day,
+                    date,
+                    timeStarted,
+                    timeEnded,
+                    lunchBreak,
+                    summary,
+                    projectCode,
+                    hoursWorked,
+                });
+
+                await client.queryArray(`
+                    INSERT INTO zephyr_weekly_logs (user_token, week_number, year, day, date, time_started, time_ended, lunch_break, summary, project_code, hours_worked)
+                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+                `, [userToken, weekNumber, year, day, date, timeStarted, timeEnded, lunchBreak, summary, projectCode, hoursWorked]);
+            }
+        }
+        return true;
+    } catch (error) {
+        console.error('Error saving weekly data:', error);
+        return false;
     }
 }
 
@@ -222,75 +304,6 @@ async function saveMonthlyData(data) {
     }
 }
 
-    // Route: Save weekly data
-    if (url.pathname === "/save-weekly-data" && req.method === "POST") {
-        const body = await req.json();
-        console.log("Data received from client:", body); // Log the received data
-
-        const result = await saveWeeklyData(body);
-        if (result) {
-            return new Response("Weekly data saved successfully", { status: 200 });
-        } else {
-            return new Response("Failed to save weekly data", { status: 500 });
-        }
-    }
-    
-    return new Response("Not Found", { status: 404 });
-}
-    
-// Function to save weekly data to the database
-async function saveWeeklyData(data) {
-    try {
-        const userToken = data.user_token; // Assuming user_token is included in the data from session service
-        const weekNumber = parseInt(data.week_number);
-        const year = parseInt(data.year);
-
-        const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
-        for (const day of daysOfWeek) {
-            const date = data[`date${day}${weekNumber}`];
-            let timeStarted = data[`timeStarted${day}${weekNumber}`];
-            let timeEnded = data[`timeEnded${day}${weekNumber}`];
-            const lunchBreak = data[`lunchBreak${day}${weekNumber}`] === 'on';
-            const summary = data[`summary${day}${weekNumber}`];
-            const projectCode = data[`projectCode${day}${weekNumber}`];
-            const hoursWorked = parseFloat(data[`hoursWorked${day}${weekNumber}`]);
-
-            // Validate the date field
-            if (!date) {
-                console.error(`Skipping ${day}: Missing date.`);
-                continue; // Skip this day if the date is missing
-            }
-
-            // Handle empty time fields
-            timeStarted = timeStarted ? `${timeStarted}:00` : null; // Append seconds if missing
-            timeEnded = timeEnded ? `${timeEnded}:00` : null;
-
-            console.log(`Inserting data for ${day}:`, {
-                userToken,
-                weekNumber,
-                year,
-                day,
-                date,
-                timeStarted,
-                timeEnded,
-                lunchBreak,
-                summary,
-                projectCode,
-                hoursWorked,
-            });
-
-            await client.queryArray(`
-                INSERT INTO zephyr_weekly_logs (user_token, week_number, year, day, date, time_started, time_ended, lunch_break, summary, project_code, hours_worked)
-                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
-            `, [userToken, weekNumber, year, day, date, timeStarted, timeEnded, lunchBreak, summary, projectCode, hoursWorked]);
-        }
-        return true;
-    } catch (error) {
-        console.error('Error saving weekly data:', error);
-        return false;
-    }
-}
-
 // Utility: Get content type for static files
 function getContentType(filePath) {
     const ext = filePath.split(".").pop();
@@ -307,6 +320,13 @@ function getContentType(filePath) {
         json: "application/json",
     };
     return mimeTypes[ext] || "application/octet-stream";
+}
+
+// Add security headers to responses
+function addSecurityHeaders(response) {
+    response.headers.set("Content-Security-Policy", "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://deno.land; style-src 'self' 'unsafe-inline'; img-src 'self'; connect-src 'self'");
+    response.headers.set("X-Frame-Options", "DENY");
+    response.headers.set("X-Content-Type-Options", "nosniff");
 }
 
 // Start the server

@@ -78,11 +78,11 @@ function updateWeekCounter() {
 }
 
 // Initial week is there
-let weekCount = 1;
+let weekCount = 0;
 
 // Function to add a week to the form
 function addWeekToForm() {
-    if (weekCount < 4) {
+    if (weekCount < 5) {
         weekCount++; // Increment here for the week count with unique ID
         const weekTemplate = `
             <div class="day-container">
@@ -174,6 +174,14 @@ function addWeekToForm() {
         const weekContainer = document.createElement('div');
         weekContainer.innerHTML = weekTemplate;
         document.getElementById('weekContainers').appendChild(weekContainer);
+
+        updateWeekCounter(); // Update the week counter after adding a new week
+        loadFormData(); // Load saved form data for the new week
+        if (weekCount >= 5) {
+            document.getElementById('addWeekBtn').disabled = true; // Disable the button if max weeks reached
+        }
+    }   else {
+        alert('Maximum of 4 weeks reached.');
     }
 }
 
