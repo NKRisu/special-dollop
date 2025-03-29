@@ -43,6 +43,15 @@ async function handler(req) {
         return response;
     }
 
+    // Route: Homepage page
+    if (url.pathname === "/homepage" && req.method === "GET") {
+        const response = await serveStaticFile('./views/homepage.html', 'text/html');
+        response.headers.set("Content-Security-Policy", "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://deno.land; style-src 'self' 'unsafe-inline'; img-src 'self'; connect-src 'self'");
+        response.headers.set("X-Frame-Options", "DENY");
+        response.headers.set("X-Content-Type-Options", "nosniff");
+        return response;
+    }
+
     // Route: Login page
     if (url.pathname === "/login" && req.method === "GET") {
         const response = await serveStaticFile('./views/login.html', 'text/html');
@@ -61,12 +70,63 @@ async function handler(req) {
         return response;
     }
 
-    // Route: Weekly page
-    if (url.pathname === "/weekly" && req.method === "GET") {
-        const response = await serveStaticFile('./views/weekly.html', 'text/html');
+   // Route: Registration confirmation page
+    if (url.pathname === "/registration-confirmation.html" && req.method === "GET") {
+        const response = await serveStaticFile("./views/registration-confirmation.html", "text/html");
         response.headers.set("Content-Security-Policy", "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://deno.land; style-src 'self' 'unsafe-inline'; img-src 'self'; connect-src 'self'");
         response.headers.set("X-Frame-Options", "DENY");
         response.headers.set("X-Content-Type-Options", "nosniff");
+        return response;
+    }
+
+    // Route: Weekly Confirmation Page
+    if (url.pathname === "/confirmation-weekly" && req.method === "GET") {
+        const response = await serveStaticFile('./views/weekly-confirmation.html', 'text/html');
+        response.headers.set("Content-Security-Policy", "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://deno.land; style-src 'self' 'unsafe-inline'; img-src 'self'; connect-src 'self'");
+        response.headers.set("X-Frame-Options", "DENY");
+        response.headers.set("X-Content-Type-Options", "nosniff");
+        return response;
+    }
+
+    // Route: Monthly Confirmation Page
+    if (url.pathname === "/confirmation-monthly" && req.method === "GET") {
+        const response = await serveStaticFile('./views/monthly-confirmation.html', 'text/html');
+        response.headers.set("Content-Security-Policy", "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://deno.land; style-src 'self' 'unsafe-inline'; img-src 'self'; connect-src 'self'");
+        response.headers.set("X-Frame-Options", "DENY");
+        response.headers.set("X-Content-Type-Options", "nosniff");
+        return response;
+    }
+
+    // Route: Weekly page
+    if (url.pathname === "/weekly" && req.method === "GET") {
+        const session = getSession(req); // Retrieve the session
+    
+        if (!session || !session.user_token) {
+            // Redirect to login if session or user_token is missing
+            return new Response(null, {
+                status: 302,
+                headers: { location: "/login" },
+            });
+        }
+    
+        // Read the weekly.html file
+        let html = await Deno.readTextFile('./views/weekly.html');
+    
+        // Inject the user_token into the HTML
+        html = html.replace(
+            '<input type="hidden" id="user_token" name="user_token" value="">',
+            `<input type="hidden" id="user_token" name="user_token" value="${session.user_token}">`
+        );
+    
+        const response = new Response(html, {
+            headers: { "Content-Type": "text/html" },
+        });
+    
+        // Add security headers
+        response.headers.set("Content-Security-Policy", "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://deno.land; style-src 'self' 'unsafe-inline'; img-src 'self'; connect-src 'self'");
+        response.headers.set("X-Frame-Options", "DENY");
+        response.headers.set("X-Content-Type-Options", "nosniff");
+    
         return response;
     }
 
@@ -82,14 +142,18 @@ async function handler(req) {
     // POST
     // Route: Registration
     if (url.pathname === "/register" && req.method === "POST") {
-        const formData = await req.formData();
-        return await registerUser(formData);
+        const formData = await req.formData(); // Parse the form data
+        return await registerUser(formData); // Pass the formData to registerUser
     }
 
     // Route: Login
     if (url.pathname === "/login" && req.method === "POST") {
-        const formData = await req.formData();
-        return await loginUser(formData, connectionInfo);
+        const formData = await req.formData(); // Parse the form data
+        const body = {}; // Convert formData to a plain object
+        for (const [key, value] of formData.entries()) {
+            body[key] = value;
+        }
+        return await loginUser(body, req); // Pass the plain object to loginUser
     }
 
     // Route: Sign out
@@ -112,10 +176,57 @@ async function handler(req) {
         });
     }
     
+    // Route: Save monthly data
+if (url.pathname === "/save-monthly-data" && req.method === "POST") {
+    const body = await req.json();
+    console.log("Data received from client:", body); // Log the received data
+
+    const result = await saveMonthlyData(body);
+    if (result) {
+        return new Response("Monthly data saved successfully", { status: 200 });
+    } else {
+        return new Response("Failed to save monthly data", { status: 500 });
+    }
+}
+
+// Function to save monthly data to the database
+async function saveMonthlyData(data) {
+    try {
+        const userToken = data.user_token; // Assuming user_token is included in the data from session service
+        const month = parseInt(data.month);
+        const year = parseInt(data.year);
+        const totalHours = parseFloat(data.totalHours);
+
+        // Validate required fields
+        if (!userToken || isNaN(month) || isNaN(year) || isNaN(totalHours)) {
+            console.error("Invalid data received for monthly log:", data);
+            return false;
+        }
+
+        console.log("Inserting monthly data:", {
+            userToken,
+            month,
+            year,
+            totalHours,
+        });
+
+        await client.queryArray(`
+            INSERT INTO zephyr_monthly_logs (user_token, month, year, total_hours)
+            VALUES ($1, $2, $3, $4)
+        `, [userToken, month, year, totalHours]);
+
+        return true;
+    } catch (error) {
+        console.error("Error saving monthly data:", error);
+        return false;
+    }
+}
 
     // Route: Save weekly data
     if (url.pathname === "/save-weekly-data" && req.method === "POST") {
         const body = await req.json();
+        console.log("Data received from client:", body); // Log the received data
+
         const result = await saveWeeklyData(body);
         if (result) {
             return new Response("Weekly data saved successfully", { status: 200 });
@@ -136,13 +247,37 @@ async function saveWeeklyData(data) {
 
         const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
         for (const day of daysOfWeek) {
-            const date = data[`date${day}`];
-            const timeStarted = data[`timeStarted${day}`];
-            const timeEnded = data[`timeEnded${day}`];
-            const lunchBreak = data[`lunchBreak${day}`] === 'Yes';
-            const summary = data[`summary${day}`];
-            const projectCode = data[`projectCode${day}`];
-            const hoursWorked = parseFloat(data[`hoursWorked${day}`]);
+            const date = data[`date${day}${weekNumber}`];
+            let timeStarted = data[`timeStarted${day}${weekNumber}`];
+            let timeEnded = data[`timeEnded${day}${weekNumber}`];
+            const lunchBreak = data[`lunchBreak${day}${weekNumber}`] === 'on';
+            const summary = data[`summary${day}${weekNumber}`];
+            const projectCode = data[`projectCode${day}${weekNumber}`];
+            const hoursWorked = parseFloat(data[`hoursWorked${day}${weekNumber}`]);
+
+            // Validate the date field
+            if (!date) {
+                console.error(`Skipping ${day}: Missing date.`);
+                continue; // Skip this day if the date is missing
+            }
+
+            // Handle empty time fields
+            timeStarted = timeStarted ? `${timeStarted}:00` : null; // Append seconds if missing
+            timeEnded = timeEnded ? `${timeEnded}:00` : null;
+
+            console.log(`Inserting data for ${day}:`, {
+                userToken,
+                weekNumber,
+                year,
+                day,
+                date,
+                timeStarted,
+                timeEnded,
+                lunchBreak,
+                summary,
+                projectCode,
+                hoursWorked,
+            });
 
             await client.queryArray(`
                 INSERT INTO zephyr_weekly_logs (user_token, week_number, year, day, date, time_started, time_ended, lunch_break, summary, project_code, hours_worked)

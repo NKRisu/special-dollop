@@ -9,6 +9,7 @@ export function createSession(user) {
     const sessionData = {
         username: user.username,
         role: user.role,
+        user_token: user.user_token,
         createdAt: Date.now(),
     };
     sessionStore.set(sessionID, sessionData);

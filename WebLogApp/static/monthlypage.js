@@ -72,6 +72,15 @@ async function saveMonthlyData() {
         data[key] = value;
     });
 
+    // Calculate total hours
+    const weeks = ['1', '2', '3', '4'];
+    let totalHours = 0;
+    weeks.forEach(week => {
+        const weeklyHours = parseFloat(data[`weeklyHours${week}`]) || 0;
+        totalHours += weeklyHours;
+    });
+    data.totalHours = totalHours.toFixed(2); // Add total hours to the data object
+
     try {
         const response = await fetch('/save-monthly-data', {
             method: 'POST',

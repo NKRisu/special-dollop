@@ -12,6 +12,10 @@ CREATE TABLE zephyr_users (
     user_token UUID UNIQUE DEFAULT uuid_generate_v4()  -- Pseudonymized identifier
 );
 
+-- Default value for the "role" column
+ALTER TABLE zephyr_users
+ADD COLUMN role VARCHAR(50) NOT NULL DEFAULT 'user';
+
 -- Weekly logs table: Detailed log entries for weekly hours
 CREATE TABLE zephyr_weekly_logs (
     log_id SERIAL PRIMARY KEY,

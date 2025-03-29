@@ -279,6 +279,28 @@ async function saveWeeklyData() {
         data[key] = value;
     });
 
+    // Validate time fields
+    for (let week = 1; week <= weekCount; week++) {
+        ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].forEach((day) => {
+            const timeStarted = data[`timeStarted${day}${week}`];
+            const timeEnded = data[`timeEnded${day}${week}`];
+
+            if (timeStarted && !/^\d{2}:\d{2}$/.test(timeStarted)) {
+                alert(`Invalid time format for ${day} ${week}. Please use HH:MM.`);
+                return;
+            }
+            if (timeEnded && !/^\d{2}:\d{2}$/.test(timeEnded)) {
+                alert(`Invalid time format for ${day} ${week}. Please use HH:MM.`);
+                return;
+            }
+
+            // Calculate hours worked
+            const lunchBreak = data[`lunchBreak${day}${week}`] === 'on' ? 'Yes' : 'No';
+            const hoursWorked = calculateHours(timeStarted, timeEnded, lunchBreak);
+            data[`hoursWorked${day}${week}`] = hoursWorked || 0;
+        });
+    }
+
     try {
         const response = await fetch('/save-weekly-data', {
             method: 'POST',
@@ -315,7 +337,7 @@ function generateCSV() {
                 const date = dateField.value;
                 const timeStarted = document.querySelector(`[name="timeStarted${day}${week}"]`).value;
                 const timeEnded = document.querySelector(`[name="timeEnded${day}${week}"]`).value;
-                const lunchBreak = document.querySelector(`[name="lunchBreak${day}${week}"]`).checked ? 'Yes' : 'No';
+                const lunchBreak = document.querySelector(`[name="lunchBreak${day}${week}"]`).checked ? 'On' : null;
                 const summary = document.querySelector(`[name="summary${day}${week}"]`).value;
                 const projectCode = document.querySelector(`[name="projectCode${day}${week}"]`).value;
 
